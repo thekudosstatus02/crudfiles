@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+      body a{
+        color: #00C851;
+      }
+    </style>
+    <link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+
+    <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+    <script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed">
+      <a class="navbar-brand" href="#">CrudFiles</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:8000/about/">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      <form class="form-inline my-2 my-lg-0" action="http://localhost:8000/search-topic-public/?subject_id={{subject.id}}" method="post">
+             {% csrf_token %}
+             {{form}}
+          <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="" value="Search" style="margin:5px;">
+      </form>
+    </div>
+  </nav>
+<div id="list-example" class="list-group-center" style="width:400px;">
+{% if topics %}
+    <h3>Topics Found:</h3>
+    <ul class="list-group">
+    {% for i in topics %}
+       <div class="alert alert-success alert-dismissible">
+         <a class="list-group-item list-group-item-action" href="#{{i.id}}">
+         <h5>{{i.topic_name}}</h5><small>unit:</small><b>{{i.unit_topic}}</b>
+         <button type="button" class="close" data-dismiss="alert">
+               ×
+         </button>
+         </a>
+         <style media="screen">
+           #alert{
+             display: none;
+           }
+         </style>
+       </div>
+    {% endfor %}
+{% endif %}
+</div>
+{% if msg %}
+
+<div class="alert alert-danger alert-dismissible" style="width:400px;">
+  <strong>{{msg}}</strong>
+  <button type="button" class="close" data-dismiss="alert">
+        ×
+  </button>
+  <style media="screen">
+    #alert{
+      display: none;
+    }
+  </style>
+</div>
+
+{% endif %}
+    <div class="" style='text-align:center; margin:40px;'>
+      <h1>{{subject.subject_name}}</h1>
+      <h3 class="text-secondary">{{subject.year}},<br>{{subject.branch}}</h3><br><br>
+    </div>
+{% if not subject.unit_set.all %}
+<div class="alert alert-success alert-dismissible" style="padding:30px; margin:10px;">
+  <h5>Sorry no unit found.</h5>
+  <button type="button" class="close" data-dismiss="alert">
+
+  </button>
+  </a>
+  <style media="screen">
+    #alert{
+      display: none;
+    }
+  </style>
+</div>
+{% endif %}
+{% if subject.unit_set.all %}
+  <nav class="navbar navbar-light bg-light px-3 fixed-bottom" style="padding:10px; margin:20px;">
+   <a class="navbar-brand" href="#"><b>UNITS:</b></a>
+   {% for unit in subject.unit_set.all %}
+   <ul class="nav nav-pills">
+     <li class="nav-item">
+       <a class="nav-link" href="#{{unit.id}}@">{{unit.unit_name}}</a>
+    </li>
+   </ul>
+   {% endfor %}
+   <a class='text-danger' href="#">Move To TOP</a>
+ </nav>
+ <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+   {% for unit in subject.unit_set.all %}
+  <div style="padding: 50px;" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+   <h4 id="{{unit.id}}@">{{unit.unit_name}}</h4>
+   <h5 class="text-secondary">{{unit.unit_imp}}</h5>
+   {% if not unit.topic_set.all %}
+   <span class='list-group-item list-group-item-action list-group-item-success' style="margin:30px; width:300px;">No topic updated till</span>
+   {% endif %}
+     {% for topic in unit.topic_set.all %}
+       <div class="list-group-item" style="padding: 40px;">
+          {{topic.topic_date}}
+          <h4 id="{{topic.id}}">{{topic.topic_name}}</h4>
+          <small class="text-success">about topic:</small>{{topic.topic_weightage}}<br>
+          <a class="btn btn-outline-success" href="{{topic.topic_link}}">Visit</a>
+          <a class="btn btn-outline-success" href="{{topic.file.url}}">Read</a>
+       </div>
+       <br>
+     {% endfor %}
+  </div>
+   {% endfor %}
+ </div>
+ {% endif %}
+ <footer class="page-footer font-small success">
+<div class="footer-copyright text-center py-3">© 2021 Copyright:
+  <a href="https://navbar.com/"> CrudFiles.com</a>
+</div>
+</footer>
+  </body>
+</html>

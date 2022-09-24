@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+
+    <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+    <script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+  </head>
+  <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+          <a class="navbar-brand" href="http://localhost:8000/search/">CrudFiles</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8000/about/">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      {% if profile %}
+    <div class="d-flex justify-content-around flex-wrap" style="margin:70px;">
+        <div class="">
+          <img class="rounded-circle" src="{{profile.dp.url}}"alt="Responsive image" width="350"; height="350";>
+          <h5 class="text-success" style="text-align:center;">{{profile.bio}}</h5>
+        </div>
+        <div class="">
+            <h1>{{profile.name}}</h1>
+            <h3 class="text-success">{{profile.dept}},<br>{{profile.branch}}</h3>
+            <h4 class="text-secondary">{{profile.education}}</h4>
+            <small class="text-success">a lesson from teacher:<br></small>
+            <p>{{profile.guide}}</p>
+              <a class="btn btn-outline-success" href="http://localhost:8000/add-subject/?profile_id={{profile.id}}">Add Subject</a>
+              <a class="btn btn-outline-success" href="http://localhost:8000/edit-profile/?profile_id={{profile.id}}">Edit Profile</a>
+            </div>
+    </div>
+    {% endif %}
+    {% if not profile %}
+    <a style="color:black;"href="http://localhost:8000/add-profile/?profile_id={{profile.id}}">Add Profile</a>
+    {% endif %}
+    {% if not profile.subject_set.all %}
+    <h1 class="text-secondary" style="text-align:center;">Please mention the subjects you teach...</h1>
+    {% endif %}
+    {% if profile.subject_set.all %}
+    <h1 class="text-secondary" style="text-align:center;">Subjects you teach:</h1>
+    {% endif %}
+    <div class="d-flex justify-content-around flex-wrap">
+      {% for subject in profile.subject_set.all %}
+       <div class="card border-success mb-3" style="width: 450px; height: 350px;margin:40px;">
+        <div class="card-header"><h2>{{subject.subject_name}}</h2></div>
+        <div class="card-body text-success">
+          <h3 class="card-title">{{subject.branch}},</h3>
+          <h4>{{subject.year}}</h4>
+          <br><br>
+            <a class="btn btn-outline-success" href="http://localhost:8000/edit-subject/?subject_id={{subject.id}}">Edit Subject</a>
+            <a class="btn btn-outline-success" href="http://localhost:8000/add-unit/?subject_id={{subject.id}}">Add Unit</a>
+            <a class="btn btn-outline-success" href="http://localhost:8000/view-subject/?subject_id={{subject.id}}">View Subject</a>
+            <br><br>
+            <small class="text-danger">last updated:<br></small>
+           {{subject.subject_date}}
+       </div>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+  <footer class="page-footer font-small success">
+ <div class="footer-copyright text-center py-3">© 2021 Copyright:
+   <a href="https://navbar.com/"> CrudFiles.com</a>
+ </div>
+</footer>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <h1>View Profile</h1>
+    <div class="" >
+      <div class="card" style='width:18rem;'>
+      <img class="rounded-circle" src=
+"{{profile.dp.url}}"
+           alt="Responsive image" width="300"; height="300";>
+        <div class="card-body">
+          <h5 class='card-title'>{{profile.name}}</h5>
+          <p class='card-text'>{{profile.guide}}</p>
+          <ul class='list-group list-group-flush'>
+            <li class="list-group-item">{{profile.bio}}</li>
+            <li class="list-group-item">{{profile.branch}}</li>
+            <li class="list-group-item">{{profile.dept}}</li>
+            <li class="list-group-item">{{profile.education}}</li>
+            <li class="list-group-item">{{profile.id}}</li>
+            <li class="list-group-item"> <a href="http://localhost:8000/add-subject/?profile_id={{profile.id}}">Add Subject</a> </li>
+            <li class="list-group-item"> <a href="http://localhost:8000/edit-profile/?profile_id={{profile.id}}">Edit Profile</a> </li>
+            <li class="list-group-item">
+              {% for subject in profile.subject_set.all %}
+                 {{subject.subject_name}}, {{subject.year}}, {{subject.branch}}
+                 <a href="http://localhost:8000/edit-subject/?subject_id={{subject.id}}">Edit Subject</a>
+                 <a href="http://localhost:8000/add-unit/?subject_id={{subject.id}}">Add Unit</a><br>
+                      {% for unit in subject.unit_set.all %}
+                            {{unit.unit_name}}, {{unit.unit_imp}}
+                            <a href="http://localhost:8000/edit-unit/?unit_id={{unit.id}}">Edit Unit</a><br>
+                            <a href="http://localhost:8000/add-topic/?unit_id={{unit.id}}">Add Topic</a><br>
+                                    {% for topic in unit.topic_set.all %}
+                                        <a href="http://localhost:8000/edit-topic/?topic_id={{topic.id}}">Edit Topic</a><br>
+                                        {{topic.topic_date}}, {{topic.topic_name}}, {{topic.topic_weightage}}<br>
+                                    {% endfor %}
+                                    <br>
+                      {% endfor %}
+                      <hr>
+              {% endfor %}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>-->

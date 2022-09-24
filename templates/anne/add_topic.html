@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+
+    <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+
+    <script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+  </head>
+  <body style="justify-content: center;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <a class="navbar-brand" href="#">CrudFiles</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br><br>
+    <div class="container">
+      <div class="alert alert-success alert-dismissible" >
+        <strong>Please mention the weightage of topics such that studemts get an idea whether this topic is important to cover or they may skip it !!!</strong>
+        <button type="button" class="close" data-dismiss="alert">
+              ×
+        </button>
+    </div>
+      <div class="jumbotron">
+        <h3 style="text-align: center;">Add Topic</h3><br>
+
+    <form id="add"class="" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.media}}
+        <div class="form-group">
+          {{form.as_p}}
+        </div>
+        <input onclick="add_topic();"class='btn btn-outline-success'type="submit" name="" value="Add">
+      </div>
+    </div>
+    <script type="text/javascript">
+    function add_topic() {
+      alert('Topic is successfully added.')
+    }
+    </script>
+    <footer class="page-footer font-small success">
+   <div class="footer-copyright text-center py-3">© 2021 Copyright:
+     <a href="https://navbar.com/"> CrudFiles.com</a>
+   </div>
+ </footer>
+  </body>
+</html>
+<!--from django import forms
+from .models import Profile,Subject,Unit,Topic
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model=Profile
+        fields={'name','bio','dept','branch','education','guide',}
+        widgets={
+        'name':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. The Weeknd'}),
+        'bio':forms.TextInput(attrs={'class':'form-control','placeholder':'keep learning!!!'}),
+        'dept':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. BTech/ BBA/ BA'}),
+        'education':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. pheD in Maths or teaching from last 7 years.'}),
+        'branch':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. CSE/IT/CIVIL'}),
+        'guide':forms.Textarea(attrs={'class':'form-control','placeholder':"""Slow down-Don't rush into things. Let your life unfold. Wait a bit to see where it takes you, and take time to weigh your options. Enjoy every bite of food, take time to look around you, let the other person finish their side of the conversation. Allow yourself time to think, to mull a bit."""}),
+        }
+
+class SubjectForm(forms.ModelForm):
+
+    class Meta:
+        model=Subject
+        fields={'subject_name','branch','year',}
+        widgets={
+        'subject_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Subject Name'}),
+        'branch':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. Btech-CSE'}),
+        'year':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. 2nd year/3rd sem'}),
+        }
+
+class UnitForm(forms.ModelForm):
+
+    class Meta:
+        model=Unit
+        fields={'unit_name','unit_imp'}
+        widgets={
+        'unit_name':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. Python language'}),
+        'unit_imp':forms.Textarea(attrs={'class':'form-control','placeholder':'unit important topics : e.g. topic1 ,topic2, topic3, topic4, topic5, topic6, topic7 topic8, topic9, topic10 and so on...'}),
+        }
+
+
+class TopicForm(forms.ModelForm):
+
+    class Meta:
+        model=Topic
+        fields={'topic_name','topic_weightage',}
+        widgets={
+        'topic_name':forms.TextInput(attrs={'class':'form-control','placeholder':'e.g. Python Functions'}),
+        'topic_weightage':forms.Textarea(attrs={'class':'form-control','placeholder':'topic importance and weightage : e.g. this topic is generally being asked in examinations of about 7-8 marks as a direct question define and explain PYTHON Functions or give an example of Python Function.'}),
+        }
+
+class LoginForm(forms.Form):
+    username=forms.CharField(label='',max_length=100,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'username'}))
+    password=forms.CharField(label='',max_length=20,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'password'}))
+
+class SearchForm(forms.Form):
+    staff_name=forms.CharField(label='',max_length=100,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'search teacher'}))
+
+class SearchTopicForm(forms.Form):
+    topic_name=forms.CharField(label='',max_length=200,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'search topic'}))
+-->
